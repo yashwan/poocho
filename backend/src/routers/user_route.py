@@ -18,6 +18,7 @@ async def create_user(request:Request, usr: UserModel):
 @log_route
 async def login_user(request:Request, login: LoginModel, response: Response):
     request_body = await request.json()
+    print(request_body)
     user = LoginModel(**request_body)
     controller_response = await user_controller.login_user(user)
     response.headers["Authorization"] = f'Bearer {controller_response["token"]["access_token"]}'

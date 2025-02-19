@@ -7,7 +7,7 @@ from src.services.token_service import decode_token
 
 class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
-        if(re.match(r"/user/.", request.url.path) and request.method != "POST" or re.match(r"/user/logout/*", request.url.path)):
+        if((re.match(r"^/.*/user/.*", request.url.path) and request.method != "POST") or re.match(r"/user/logout/*", request.url.path) or re.match(r"^/.*/q/.*", request.url.path)):
             token = request.headers.get("Authorization") or request.cookies.get("Authorization")
             if token is None:
                 raise HTTPException(status_code=401, detail="Unauthorized")

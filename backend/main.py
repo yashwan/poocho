@@ -38,14 +38,13 @@ async def connect():
 async def status() -> dict:
     return {
         "mongodbConnection": statuses["mongodbConnection"],
-        "host": os,
         "pid": os.getpid()
     }
 
 app.add_middleware(AuthMiddleware)
 
 
-app.include_router(router)
+app.include_router(router, prefix="/v1", tags=["v1"])
 app.add_event_handler("startup", connect)
 
 
